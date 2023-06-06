@@ -1,0 +1,90 @@
+<!-- add_media.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Media</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f1f1f1;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .upload-form {
+            max-width: 400px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .upload-form h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .upload-form input[type="file"] {
+            display: none;
+        }
+
+        .upload-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .upload-button:hover {
+            background-color: #45a049;
+        }
+
+        .file-label {
+            display: inline-block;
+            margin-left: 10px;
+        }
+
+        .selected-file {
+            font-size: 14px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="upload-form">
+        <h1>Add Media</h1>
+        
+        <form action="/upload" method="post" enctype="multipart/form-data">
+            <label for="media" class="upload-button">
+                Choose File
+                <input type="file" name="media" id="media" accept="audio/*, video/*">
+            </label>
+            <span class="file-label" id="file-label">No file selected</span>
+            <button type="submit" class="upload-button">Upload</button>
+        </form>
+
+        <div class="selected-file" id="selected-file"></div>
+    </div>
+
+    <script>
+        const fileInput = document.getElementById('media');
+        const fileLabel = document.getElementById('file-label');
+        const selectedFile = document.getElementById('selected-file');
+
+        fileInput.addEventListener('change', (event) => {
+            const fileName = event.target.files[0].name;
+            fileLabel.innerText = fileName;
+            selectedFile.innerText = `Selected file: ${fileName}`;
+        });
+    </script>
+</body>
+</html>

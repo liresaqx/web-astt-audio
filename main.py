@@ -1,15 +1,20 @@
+import wave
+import datetime
+from tempfile import NamedTemporaryFile
 from typing import Union
 
-from fastapi import FastAPI
+from fastapi import FastAPI, File, UploadFile, Request
+from fastapi.responses import HTMLResponse,RedirectResponse
+from fastapi.templating import Jinja2Templates
+from pydub import AudioSegment
 
 app = FastAPI()
+templates = Jinja2Templates(directory="fastapienv/templates")
 
+@app.get("/", response_class=HTMLResponse)
+def home(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
 
-@app.get("/")
-def read_root():
-    return {"Hello": "World"}
-
-
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: Union[str, None] = None):
-    return {"item_id": item_id, "q": q}
+@app.post("/upload")
+async def upload_video(media:UploadFile = File(...)):
+    return {"filename": media.filename}
